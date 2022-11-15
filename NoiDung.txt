@@ -1,0 +1,56 @@
+	DATABASE
+Product
+	idPD
+	namePD
+	typePD // android ios 
+	RamPD
+	RomPD
+	ColorPD
+	pricePD
+	prodecerPD // iphone samsung OPPO
+	discriptionPD // mô tả sản phẩm
+Customer
+	idCus
+	nameCus
+	sexCus
+	phoneCus
+	accountCus
+	addressCus
+	joinDateCus
+	cartId
+<<<<<<< HEAD
+AccountCus
+	idAcc
+	account//sdt
+	password	
+=======
+>>>>>>> parent of b4656d4 (Merge branch 'main' of https://github.com/TThanhNam/DoAn_WebsiteBanDoCongNghe)
+cart // giỏ hàng
+	cartId
+	totalMoney
+DetalCart // chi tiết giỏ hàng
+	detalCartId
+	cartId
+	idPD
+	quantity
+Order
+	OrderId
+	idCus
+	address
+	wayToPay
+	deliveryWay
+	totalMoney
+	
+
+	
+	
+	
+	
+	
+	
+
+
+	
+	
+
+
