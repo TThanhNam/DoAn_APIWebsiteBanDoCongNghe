@@ -1,5 +1,8 @@
+github
+VuongMinh01
+NguyenVanBangg
 	DATABASE
-Product
+Product 
 	idPD
 	namePD
 	typePD // android ios 
@@ -18,17 +21,14 @@ Customer
 	addressCus
 	joinDateCus
 	cartId
-<<<<<<< HEAD
-AccountCus
+Account
 	idAcc
 	account//sdt
 	password	
-=======
->>>>>>> parent of b4656d4 (Merge branch 'main' of https://github.com/TThanhNam/DoAn_WebsiteBanDoCongNghe)
 cart // giỏ hàng
 	cartId
 	totalMoney
-DetalCart // chi tiết giỏ hàng
+CartDetail // chi tiết giỏ hàng
 	detalCartId
 	cartId
 	idPD
@@ -40,6 +40,16 @@ Order
 	wayToPay
 	deliveryWay
 	totalMoney
+
+Server
+	CartService port 9001
+	DetailCartService port 9002
+	OrderService port 9003
+	ProductService port 9004
+	CustomerService port 9005
+	AccountService port 9006
+
+	DiscoverySevice port 8761
 	
 
 	

@@ -37,9 +37,7 @@ public class CartRestController {
 	
 	@DeleteMapping("/{id}")
 	public String deleteCartById(@PathVariable int id) {
-		if(true)
-			return cartService.deleteCart(id);
-		return "Khong thanh cong";
+		return cartService.deleteCart(id);
 	}
 	
 	@PostMapping("/update")

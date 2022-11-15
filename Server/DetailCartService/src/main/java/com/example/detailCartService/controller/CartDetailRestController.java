@@ -54,8 +54,6 @@ public class CartDetailRestController {
 	}
 	@DeleteMapping("/{id}")
 	public String deleteCartDetail(@PathVariable int id) {
-		if(true)
-			return cartDetailService.deleteCartDetail(id);
-		return "Khong thanh cong";
+		return cartDetailService.deleteCartDetail(id);
 	}
 }

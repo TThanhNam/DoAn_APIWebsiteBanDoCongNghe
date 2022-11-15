@@ -6,14 +6,7 @@ import com.example.detailCartService.VO.CartDetail_Cart;
 import com.example.detailCartService.VO.CartDetail_Cart_Product;
 import com.example.detailCartService.entity.CartDetail;
 
-
-
 public interface CartDetailService {
-	//public Cart getOneCart(int cartID);
-//	public Cart saveCart(Cart cart);
-//	public List<Cart> getCarts();
-//	public String deleteCart(int cartID);
-//	public Cart update(Cart cart);
 	public CartDetail getOneCartDetail(int cartDetailID);
 	public List<CartDetail> getCartDetails();
 	public CartDetail saveCartDetail(CartDetail cartDetail);

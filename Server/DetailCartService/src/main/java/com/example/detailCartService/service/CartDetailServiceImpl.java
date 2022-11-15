@@ -62,5 +62,4 @@ public class CartDetailServiceImpl implements CartDetailService {
 		CartDetail_Cart_Product co = new CartDetail_Cart_Product(cartDetail, cart, product);
 		return co;
 	}
-	
 }

@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public class OrderOOD implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int OrderId;
 	private int idCus;
 	private String address;
