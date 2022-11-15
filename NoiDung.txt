@@ -1,7 +1,8 @@
-github
-VuongMinh01
-NguyenVanBangg
-	DATABASE
+		GITHUB
+	VuongMinh01
+	NguyenVanBangg
+	Vu1092001
+		DATABASE
 Product 
 	idPD
 	namePD
@@ -41,7 +42,7 @@ Order
 	deliveryWay
 	totalMoney
 
-Server
+		SERVICE
 	CartService port 9001
 	DetailCartService port 9002
 	OrderService port 9003
@@ -50,13 +51,7 @@ Server
 	AccountService port 9006
 
 	DiscoverySevice port 8761
-	
-
-	
-	
-	
-	
-	
+	ApiGatewayService port 9191
 	
 
 
