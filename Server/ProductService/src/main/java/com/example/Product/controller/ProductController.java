@@ -2,6 +2,7 @@ package com.example.Product.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Product.entity.Product;
 import com.example.Product.service.ProductService;
+import com.example.Product.service.ProductServiceImpl;
 
-@RestController
 @RequestMapping("/Product")
+@RestController
 public class ProductController {
 	@Autowired
-	private ProductService productService;
+	private ProductServiceImpl productService;
 
-	@PostMapping("/")
+	@PostMapping("/save")
 	public Product addProduct(@RequestBody Product product) {
 		productService.saveProduct(product);
 		return product;
