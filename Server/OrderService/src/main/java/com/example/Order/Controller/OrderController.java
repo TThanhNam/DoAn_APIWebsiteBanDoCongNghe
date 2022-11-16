@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Order.Model.CustomerOfOrder;
 import com.example.Order.Model.OrderOOD;
 import com.example.Order.Service.OrderService;
 
@@ -41,5 +42,10 @@ public class OrderController {
 	private String deleteOrder(@PathVariable int id) {
 		orderService.deleteById(id);
 		return "Delete id" + id;
+	}
+	
+	@GetMapping("/call/id")
+	public CustomerOfOrder getCustomerOfOrder(int id) {
+		return orderService.findByIdCustomerOrder(id);
 	}
 }
