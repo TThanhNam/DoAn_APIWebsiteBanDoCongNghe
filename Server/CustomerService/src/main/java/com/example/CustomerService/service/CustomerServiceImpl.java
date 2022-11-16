@@ -54,7 +54,7 @@ public class CustomerServiceImpl {
 	public AccountOfCustomer getAccountOfCustomer(int idCus) {
 		Customer customer = customerRepository.findById(idCus).get();
 		AccountCustomer accountCustomer = restTemplate
-				.getForObject("http://localhost:8080/Account/" + customer.getIdAcc(), AccountCustomer.class);
+				.getForObject("http://localhost:9006/Account/" + customer.getIdAcc(), AccountCustomer.class);
 		AccountOfCustomer accountOfCustomer = new AccountOfCustomer(accountCustomer, customer);
 		return accountOfCustomer;
 	}
