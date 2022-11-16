@@ -45,4 +45,17 @@ public class OrderService {
 		CustomerOfOrder co = new CustomerOfOrder(order,customer);
 		return co;
 	}
+	
+	public OrderOOD update(int id,OrderOOD orderOOD) {
+		OrderOOD order1 = orderRepository.findById(id).orElse(null);
+		if(order1 == null) {
+			return null;
+		}
+		order1.setAddress(orderOOD.getAddress());
+		order1.setDeliveryWay(orderOOD.getDeliveryWay());
+		order1.setIdCus(orderOOD.getIdCus());
+		order1.setTotalMoney(orderOOD.getTotalMoney());
+		order1.setWayToPay(orderOOD.getWayToPay());
+		return orderRepository.save(order1);
+	}
 }

@@ -48,8 +48,13 @@ public class CartService {
 		return "Xoa thanh cong"; 
 	}
 
-	public Cart update(Cart cart) {
-		return cartRepository.saveAndFlush(cart);
+	public Cart update(int id ,Cart cart) {
+		Cart cart1 = cartRepository.findById(id).orElse(null);
+		if(cart1 == null) {
+			return null;}
+		cart1.setTotalMoney(cart.getTotalMoney());
+		return cartRepository.save(cart1);
 	}
+		
 	
 }
