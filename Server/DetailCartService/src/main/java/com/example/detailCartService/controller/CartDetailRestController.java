@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.detailCartService.VO.CartDetail_Cart;
-import com.example.detailCartService.VO.CartDetail_Cart_Product;
 import com.example.detailCartService.entity.CartDetail;
+import com.example.detailCartService.entity.ProductOfCartDetail;
 import com.example.detailCartService.service.CartDetailService;
 
 @RestController
@@ -21,39 +20,40 @@ import com.example.detailCartService.service.CartDetailService;
 public class CartDetailRestController {
 	
 	@Autowired
-	private CartDetailService cartDetailService;
-	
-	@GetMapping("/{id}")
-	public CartDetail getCartDetailID(@PathVariable int id) {
-		return cartDetailService.getOneCartDetail(id);
-	}
-	
-	@GetMapping("/call/{id}")
-	public CartDetail_Cart getCartDetail_Cart(@PathVariable int id) {
-		return cartDetailService.getCartDetail_Cart(id);
-	}
-	
-	@GetMapping("/calls/{id}")
-	public CartDetail_Cart_Product getCartDetail_Cart_Product(@PathVariable int id) {
-		return cartDetailService.getCartDetail_Cart_Product(id);
-	}
-	
-	@PostMapping("/saveCartDetail")
-	public CartDetail saveCartDetail(@RequestBody CartDetail cartDetail) {
-		return cartDetailService.saveCartDetail(cartDetail);
-	}
+	private CartDetailService cartDetailService; 
 	
 	@GetMapping("/")
 	public List<CartDetail> getCartDetails(){
-		return cartDetailService.getCartDetails();
+		return cartDetailService.findAll();
 	}
 	
-	@PostMapping("/update")
-	public CartDetail update(CartDetail cartDetail) {
-		return cartDetailService.update(cartDetail);
+	@GetMapping("/{id}")
+	public ProductOfCartDetail getCartDetailID(@PathVariable int id) {
+		return cartDetailService.findById(id);
 	}
+	
+	@GetMapping("/CartDetailAndProduct")
+	private List<ProductOfCartDetail> getCartDetailAndProduct() {
+		// TODO Auto-generated method stub
+		return cartDetailService.findAllCartDetalAndProduct();
+	}
+	
+	@GetMapping("/getByCartId/{id}")
+	private List<ProductOfCartDetail> getByCartId(@PathVariable int id) {
+		// TODO Auto-generated method stub
+		return cartDetailService.getCartDetalAndProductByCartId(id);
+	}
+		
+	@PostMapping("/")
+	public CartDetail saveCartDetail(@RequestBody CartDetail cartDetail) {
+		return cartDetailService.saveAndFlush(cartDetail);
+	}
+	
 	@DeleteMapping("/{id}")
 	public String deleteCartDetail(@PathVariable int id) {
-		return cartDetailService.deleteCartDetail(id);
+		cartDetailService.deleteById(id);
+		return "Xóa thành công " + id;
 	}
+	
+	
 }

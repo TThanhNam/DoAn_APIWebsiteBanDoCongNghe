@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cartService.entity.Cart;
+import com.example.cartService.entity.CartAndCartDetail;
 import com.example.cartService.service.CartService;
 
 @RestController
@@ -23,6 +24,11 @@ public class CartRestController {
 	@GetMapping("/")
 	public List<Cart> getCarts(){
 		return cartService.getCarts();
+	}
+	@GetMapping("/getCartAndCartDetail/{id}")
+	private CartAndCartDetail getCartAndCartDetail(@PathVariable int id) {
+		// TODO Auto-generated method stub
+		return cartService.getCartAndCartDetailByCartId(id);
 	}
 	
 	@PostMapping("/saveCart")

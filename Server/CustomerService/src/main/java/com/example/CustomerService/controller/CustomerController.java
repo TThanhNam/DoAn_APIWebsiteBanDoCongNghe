@@ -26,12 +26,7 @@ public class CustomerController {
 	public List<Customer> findAll() {
 		return customerServiceImpl.findAll();
 	}
-
-//	@GetMapping("/{id}")
-//	public Customer findById(int id) {
-//		return customerServiceImpl.findById(id);
-//	}
-
+	
 	@DeleteMapping("/{id}")
 	public String deleteById(@PathVariable int id) {
 		return customerServiceImpl.deleteById(id);
