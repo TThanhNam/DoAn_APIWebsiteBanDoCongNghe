@@ -1,6 +1,8 @@
-package com.example.cartService.entity;
+package com.example.cartService.model;
 
 import java.util.List;
+
+import com.example.cartService.entity.Cart;
 
 public class CartAndCartDetail {
 	private Cart cart;

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.example.cartService.entity.Cart;
-import com.example.cartService.entity.CartAndCartDetail;
-import com.example.cartService.entity.ProductOfCartDetail;
+import com.example.cartService.model.CartAndCartDetail;
+import com.example.cartService.model.ProductOfCartDetail;
 import com.example.cartService.repository.CartRepository;
 
 @Service
@@ -25,8 +25,8 @@ public class CartService {
 		return cartRepository.findById(cartID).get();
 	}
 
-	public Cart saveCart(Cart cart) {
-		return cartRepository.save(cart);
+	public Cart saveAndFlush(Cart cart) {
+		return cartRepository.saveAndFlush(cart);
 	}
 
 	public List<Cart> getCarts() {
@@ -48,13 +48,13 @@ public class CartService {
 		return "Xoa thanh cong"; 
 	}
 
-	public Cart update(int id ,Cart cart) {
-		Cart cart1 = cartRepository.findById(id).orElse(null);
-		if(cart1 == null) {
-			return null;}
-		cart1.setTotalMoney(cart.getTotalMoney());
-		return cartRepository.save(cart1);
+	public String deleteAll() {
+		cartRepository.deleteAll();
+		return "Xóa hết thành công";
 	}
+	
+	
+
 		
 	
 }

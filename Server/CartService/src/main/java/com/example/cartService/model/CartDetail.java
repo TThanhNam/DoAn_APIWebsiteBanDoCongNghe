@@ -1,4 +1,4 @@
-package com.example.cartService.entity;
+package com.example.cartService.model;
 
 import java.io.Serializable;
 

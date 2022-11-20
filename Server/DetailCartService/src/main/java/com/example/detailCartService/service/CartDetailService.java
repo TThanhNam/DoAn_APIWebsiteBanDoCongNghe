@@ -60,15 +60,4 @@ public class CartDetailService {
 		}
 		return lsProductOfCartDetails;
 	}
-	
-	public CartDetail update(int id,CartDetail cartDetail) {
-		CartDetail caDetail1 = cartDetailRepository.findById(id).orElse(null);
-		if(caDetail1 == null) {
-			return null;
-		}
-		caDetail1.setCartID(cartDetail.getCartID());
-		caDetail1.setProductID(cartDetail.getProductID());
-		caDetail1.setQuantity(cartDetail.getQuantity());
-		return cartDetailRepository.save(caDetail1);
-	}
 }

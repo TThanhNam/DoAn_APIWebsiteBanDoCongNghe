@@ -1,7 +1,6 @@
 package com.example.CustomerService.entity;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,8 +8,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 @Entity
 public class Customer implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8688810190781019781L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCus;
@@ -19,9 +25,25 @@ public class Customer implements Serializable {
 	private String sexCus;
 	private String phoneCus;
 	private String addressCus;
+	@CreationTimestamp
 	private Date joinDateCus;
-	private int cartId;
+	
+	public Customer() {
+		super();
+	}
 
+	public Customer(int idCus, int idAcc, String nameCus, String sexCus, String phoneCus, String addressCus,
+			Date joinDateCus, int cartId) {
+		super();
+		this.idCus = idCus;
+		this.idAcc = idAcc;
+		this.nameCus = nameCus;
+		this.sexCus = sexCus;
+		this.phoneCus = phoneCus;
+		this.addressCus = addressCus;
+		this.joinDateCus = joinDateCus;
+	}
+	
 	public int getIdCus() {
 		return idCus;
 	}
@@ -78,35 +100,10 @@ public class Customer implements Serializable {
 		this.joinDateCus = joinDateCus;
 	}
 
-	public int getCartId() {
-		return cartId;
-	}
-
-	public void setCartId(int cartId) {
-		this.cartId = cartId;
-	}
-
-	public Customer() {
-		super();
-	}
-
-	public Customer(int idCus, int idAcc, String nameCus, String sexCus, String phoneCus, String addressCus,
-			Date joinDateCus, int cartId) {
-		super();
-		this.idCus = idCus;
-		this.idAcc = idAcc;
-		this.nameCus = nameCus;
-		this.sexCus = sexCus;
-		this.phoneCus = phoneCus;
-		this.addressCus = addressCus;
-		this.joinDateCus = joinDateCus;
-		this.cartId = cartId;
-	}
-
 	@Override
 	public String toString() {
 		return "AccountCustomer [idCus=" + idCus + ", idAcc=" + idAcc + ", nameCus=" + nameCus + ", sexCus=" + sexCus
 				+ ", phoneCus=" + phoneCus + ", addressCus=" + addressCus + ", joinDateCus=" + joinDateCus + ", cartId="
-				+ cartId + "]";
+				+ "]";
 	}
 }

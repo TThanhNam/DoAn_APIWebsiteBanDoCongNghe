@@ -56,9 +56,9 @@ public class CartDetailRestController {
 		return "Xóa thành công " + id;
 	}
 	
-	@PutMapping("/{id}")
-	public CartDetail update(@PathVariable int id,@RequestBody CartDetail cartDetail) {
-		return cartDetailService.update(id, cartDetail);
+	@PutMapping("/")
+	public CartDetail update(@RequestBody CartDetail cartDetail) {
+		return cartDetailService.saveAndFlush(cartDetail);
 	}
 	
 }

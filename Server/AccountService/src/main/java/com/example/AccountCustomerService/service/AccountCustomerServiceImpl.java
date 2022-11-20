@@ -26,7 +26,14 @@ public class AccountCustomerServiceImpl {
 		accountCustomerRepository.deleteById(id);
 		return "Xoa thanh cong";
 	}
+	
+	
+	public void deleteAll() {
+		accountCustomerRepository.deleteAll();
+	}
+
 	public AccountCustomer saveAccountCustomer (AccountCustomer acc) {
+		
 		return accountCustomerRepository.save(acc);
 	}
 	

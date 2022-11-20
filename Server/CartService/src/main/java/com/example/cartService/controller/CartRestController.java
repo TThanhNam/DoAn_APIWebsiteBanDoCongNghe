@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.cartService.entity.Cart;
-import com.example.cartService.entity.CartAndCartDetail;
+import com.example.cartService.model.CartAndCartDetail;
 import com.example.cartService.service.CartService;
 
 @RestController
@@ -26,15 +26,16 @@ public class CartRestController {
 	public List<Cart> getCarts(){
 		return cartService.getCarts();
 	}
+	
 	@GetMapping("/getCartAndCartDetail/{id}")
 	private CartAndCartDetail getCartAndCartDetail(@PathVariable int id) {
 		// TODO Auto-generated method stub
 		return cartService.getCartAndCartDetailByCartId(id);
 	}
 	
-	@PostMapping("/saveCart")
+	@PostMapping("/")
 	public Cart saveCart(@RequestBody Cart cart) {
-		return cartService.saveCart(cart);
+		return cartService.saveAndFlush(cart);
 	}
 	
 	@GetMapping("/{id}")
@@ -47,8 +48,13 @@ public class CartRestController {
 		return cartService.deleteCart(id);
 	}
 	
-	@PutMapping("/{id}")
-	public Cart updateCart(@PathVariable int id,@RequestBody Cart cart) {
-		return cartService.update(id, cart);
+	@DeleteMapping("/")
+	public String deleteCartById() {
+		return cartService.deleteAll();
+	}
+	
+	@PutMapping("/")
+	public Cart updateCart(@RequestBody Cart cart) {
+		return cartService.saveAndFlush(cart);
 	}
 }
