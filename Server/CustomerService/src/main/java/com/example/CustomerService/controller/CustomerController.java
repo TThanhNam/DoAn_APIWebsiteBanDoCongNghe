@@ -18,6 +18,9 @@ import com.example.CustomerService.doubleEntity.AccountOfCustomer;
 import com.example.CustomerService.entity.Customer;
 import com.example.CustomerService.service.CustomerServiceImpl;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+
 @RequestMapping("/Customer")
 @RestController
 public class CustomerController {
@@ -28,29 +31,38 @@ public class CustomerController {
 	public List<Customer> findAll() {
 		return customerServiceImpl.findAll();
 	}
-	
+
 	@DeleteMapping("/{id}")
 	public String deleteById(@PathVariable int id) {
 		return customerServiceImpl.deleteById(id);
 	}
-	
+
 	@DeleteMapping("/")
 	public String deleteById() {
 		return customerServiceImpl.deleteAll();
 	}
-	
+
 	@PostMapping("/")
 	public Customer saveCustomer(@RequestBody Customer customer) throws RestClientException, URISyntaxException {
 		return customerServiceImpl.saveCustomer(customer);
 	}
-	
+
 	@PutMapping("/{id}")
-	public Customer updateCustomer(@PathVariable int id,@RequestBody Customer customer) {
+	public Customer updateCustomer(@PathVariable int id, @RequestBody Customer customer) {
 		return customerServiceImpl.updateCustomer(id, customer);
 	}
-	
+
 	@GetMapping("/{id}")
+	@CircuitBreaker(name = "listcustomer")
+	@RateLimiter(name = "getAccountOfCustomer", fallbackMethod = "rateLimitterFallBack")
 	public AccountOfCustomer getAccountOfCustomer(@PathVariable int id) {
 		return customerServiceImpl.getAccountOfCustomer(id);
 	}
-}	
+
+	public AccountOfCustomer rateLimitterFallBack(Exception e) {
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Quá nhiều request");
+		}
+		return null;
+	}
+}

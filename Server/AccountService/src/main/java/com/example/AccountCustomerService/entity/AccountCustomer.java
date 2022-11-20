@@ -9,7 +9,6 @@ import javax.persistence.Id;
 @Entity
 public class AccountCustomer implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idAcc;
 	private String account;
 	private String password;

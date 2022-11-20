@@ -1,0 +1,39 @@
+resilience4j.ratelimiter:
+  instances:
+    getAccountOfCustomer:
+      limitForPeriod: 1 # quyền khả dụng trong giới hạn thời gian làm mới
+      limitRefreshPeriod: 4s #khoảng thời gian làm mới
+      timeoutDuration: 3s #thời gian chờ
+      registerHealthIndicator: true
+      eventConsumerBufferSize: 100
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+resilience4j:
+  circuitbreaker:
+    instances:
+      listcustomer:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10 #kích thước đệm
+        failureRateThreshold: 50 #ngưỡng thất bại
+        minimumNumberOfCalls: 5 # số cuộc gọi tối thiểu
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 5s #chờ thời gian ở trạng thái mở
+        permittedNumberOfCallsInHalfOpenState: 3 #Số cuộc gọi được phép Ở trạng thái nửa mở
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+        
+retry:
+    instances:
+      SAVECUSTOMER:
+        max-retry-attempts: 5 #số lần gọi lại
+        waitDuration: 10s #gọi lại trong 10s chương trình kia bị lỗi
+
