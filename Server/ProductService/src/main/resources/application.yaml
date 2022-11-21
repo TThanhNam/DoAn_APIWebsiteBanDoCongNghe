@@ -1,0 +1,19 @@
+resilience4j.ratelimiter:
+  instances:
+    getProduct:
+      limitForPeriod: 1 # quyền khả dụng trong giới hạn thời gian làm mới
+      limitRefreshPeriod: 4s #khoảng thời gian làm mới
+      timeoutDuration: 3s #thời gian chờ
+      registerHealthIndicator: true
+      eventConsumerBufferSize: 100
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
