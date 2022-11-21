@@ -33,5 +33,9 @@ public interface ProductService {
 	public List<Product> findNokia();
 	public List<Product> findXiaomi();
 	
+	public List<Product> findBytypePD(String typeTamp);
+	public List<Product> findByNamePD(String nameTamp);
+	public List<Product> findByRamPD(int ramTamp);
+	
 
 }

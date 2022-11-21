@@ -58,6 +58,22 @@ public class ProductServiceImpl implements ProductService{
          return customer.get(); 
 		
 	}
+	
+	//TypePD
+	@Override
+	public List<Product> findBytypePD(String typeTamp) {
+		return productRepository.findBytypePD(typeTamp);
+	}
+	//NamePD
+	@Override
+	public List<Product> findByNamePD(String nameTamp) {
+		return productRepository.findByNamePD(nameTamp);
+	}
+	//RamPD
+	@Override
+	public List<Product> findByRamPD(int ramTamp) {
+		return productRepository.findByRamPD(ramTamp);
+	}
 
 	@Override
 	public List<Product> findRom16() {
@@ -170,7 +186,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	
-
+	
 
 
 	   

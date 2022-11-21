@@ -57,4 +57,13 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	@Query(value = " select * from product where prodecerPD = 'Xiaomi'", nativeQuery = true)
 	public List<Product> findXiaomi();
 
+	//typePD
+	@Query(value = "SELECT * FROM public.product WHERE typepd ILIKE ?", nativeQuery = true)
+	public List<Product> findBytypePD(String typePD);
+	//namePD
+	@Query(value = "SELECT * FROM public.product WHERE namepd ILIKE ?", nativeQuery = true)
+	public List<Product> findByNamePD(String namePD);
+	//ramPD
+	@Query(value = "SELECT * FROM public.product WHERE rampd = ?", nativeQuery = true)
+	public List<Product> findByRamPD(int ramPD);
 }
