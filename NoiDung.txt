@@ -13,21 +13,24 @@ Product
 	pricePD
 	prodecerPD // iphone samsung OPPO
 	discriptionPD // mô tả sản phẩm
+Account
+	idAcc
+	idCus
+	account//sdt
+	password	
 Customer
 	idCus
+	idAcc
+	cartId
 	nameCus
 	sexCus
 	phoneCus
 	accountCus
 	addressCus
 	joinDateCus
-	cartId
-Account
-	idAcc
-	account//sdt
-	password	
 cart // giỏ hàng
 	cartId
+	idCus
 	totalMoney
 CartDetail // chi tiết giỏ hàng
 	detalCartId
