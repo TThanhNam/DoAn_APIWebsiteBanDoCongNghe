@@ -10,7 +10,6 @@ import javax.persistence.Id;
 @Entity
 public class Cart implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartID;
 	private int idCus;
 	private double totalMoney = 0;

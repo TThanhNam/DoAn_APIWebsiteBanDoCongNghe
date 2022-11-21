@@ -30,7 +30,7 @@ public class AccountCustomerServiceImpl {
 		if (acc.isPresent()) {
 			System.out.println("Đã tìm thấy");
 			return acc.get();
-		}else {
+		} else {
 			throw new RuntimeException("Server không phản hồi");
 		}
 	}
@@ -49,8 +49,8 @@ public class AccountCustomerServiceImpl {
 		String link = "http://localhost:9005/Customer/";
 		Date date = new Date();
 		Random random = new Random();
-		acc = new AccountCustomer(random.nextInt(100000), acc.getAccount(), acc.getPassword());
-		Customer customer = new Customer(0, acc.getIdAcc(), "", "", "", "", date);
+		acc = new AccountCustomer(random.nextInt(10000),random.nextInt(10000),acc.getAccount(),acc.getPassword());
+		Customer customer = new Customer(acc.getIdCus(), acc.getIdAcc(),"","","","", date);
 		HttpEntity<Customer> request = new HttpEntity<>(customer);
 		Customer foo = restTemplate.postForObject(link, request, Customer.class);
 		return accountCustomerRepository.save(acc);

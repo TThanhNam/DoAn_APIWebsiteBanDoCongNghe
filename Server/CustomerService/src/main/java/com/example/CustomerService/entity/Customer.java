@@ -16,9 +16,9 @@ public class Customer implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -8688810190781019781L;
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idCus;
 	private int idAcc;
 	private String nameCus;
@@ -27,10 +27,13 @@ public class Customer implements Serializable {
 	private String addressCus;
 	@CreationTimestamp
 	private Date joinDateCus;
-	
+	private int cartId;
+
 	public Customer() {
 		super();
 	}
+
+	
 
 	public Customer(int idCus, int idAcc, String nameCus, String sexCus, String phoneCus, String addressCus,
 			Date joinDateCus, int cartId) {
@@ -42,8 +45,11 @@ public class Customer implements Serializable {
 		this.phoneCus = phoneCus;
 		this.addressCus = addressCus;
 		this.joinDateCus = joinDateCus;
+		this.cartId = cartId;
 	}
-	
+
+
+
 	public int getIdCus() {
 		return idCus;
 	}
@@ -100,10 +106,20 @@ public class Customer implements Serializable {
 		this.joinDateCus = joinDateCus;
 	}
 
+	public int getCartId() {
+		return cartId;
+	}
+
+	public void setCartId(int cartId) {
+		this.cartId = cartId;
+	}
+
 	@Override
 	public String toString() {
-		return "AccountCustomer [idCus=" + idCus + ", idAcc=" + idAcc + ", nameCus=" + nameCus + ", sexCus=" + sexCus
+		return "Customer [idCus=" + idCus + ", idAcc=" + idAcc + ", nameCus=" + nameCus + ", sexCus=" + sexCus
 				+ ", phoneCus=" + phoneCus + ", addressCus=" + addressCus + ", joinDateCus=" + joinDateCus + ", cartId="
-				+ "]";
+				+ cartId + "]";
 	}
+
+	
 }

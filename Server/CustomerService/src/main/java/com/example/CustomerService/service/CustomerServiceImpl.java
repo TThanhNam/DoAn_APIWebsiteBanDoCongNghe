@@ -3,6 +3,7 @@ package com.example.CustomerService.service;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -46,9 +47,10 @@ public class CustomerServiceImpl {
 	}
 
 	public Customer saveCustomer(Customer customer) throws RestClientException, URISyntaxException {
-		int cusID = (int) Math.floor(((Math.random() * 899999) + 100000));
-		customer.setIdCus(cusID);
-		CartVO cartVO = new CartVO(cusID, 0);
+		Random random = new Random();
+		CartVO cartVO = new CartVO(random.nextInt(10000),customer.getIdCus(),0);
+		customer.setCartId(cartVO.getCartID());
+		//CartVO cartVO = new CartVO(customer.getIdCus(), 0);
 		HttpEntity<CartVO> reques = new HttpEntity<>(cartVO);
 		ResponseEntity<CartVO> cart = restTemplate.postForEntity("http://localhost:9001/Cart/", reques, CartVO.class);
 		System.out.println(cart);
