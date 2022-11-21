@@ -64,17 +64,17 @@ public class ProductController {
 	//typePD
 	@GetMapping("/getPDbyType/{typePD}")
 	public List<Product> getProductByType(@PathVariable String typePD) {
-		return productService.findBytypePD("%"+typePD+"%");
+		return productServiceImpl.findBytypePD("%"+typePD+"%");
 	}
 	//namePD
 	@GetMapping("/getPDbyName/{namePD}")
 	public List<Product> getProductByName(@PathVariable String namePD) {
-		return productService.findByNamePD("%"+namePD+"%");
+		return productServiceImpl.findByNamePD("%"+namePD+"%");
 	}
 	//ramPD
 	@GetMapping("/getPDbyRam/{ramPD}")
 	public List<Product> getProductByRam(@PathVariable int ramPD) {
-		return productService.findByRamPD(ramPD);
+		return productServiceImpl.findByRamPD(ramPD);
 	}
 	
 	@GetMapping("/rom16")
