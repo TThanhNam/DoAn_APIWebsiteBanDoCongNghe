@@ -1,6 +1,5 @@
 package com.example.AccountCustomerService.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,18 +57,5 @@ public class AccountCustomerController {
 	@CachePut(value = "Account", key = "#id")
 	public AccountCustomer updateAccountCustomer(@PathVariable int id, @RequestBody AccountCustomer account) {
 		return accountCustomerServiceImpl.updateAccountCustomer(id, account);
-	}
-	@GetMapping("/{account}/{password}")
-	public String login (@PathVariable String account,@PathVariable String password) {
-		List<AccountCustomer> ls = findAll() ;
-		for (AccountCustomer accountCustomer : ls) {
-			if (accountCustomer.getAccount().equals(account)&& accountCustomer.getPassword().equals(password)) {
-				accountCustomerServiceImpl.login(account, password);
-				return "Login thành công";
-			}else {
-				return "Sai tài khoản hoặc mật khẩu";
-			}
-		}
-		return null;
 	}
 }
