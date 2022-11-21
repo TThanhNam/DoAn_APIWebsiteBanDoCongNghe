@@ -34,7 +34,20 @@ public class AccountCustomerServiceImpl {
 			throw new RuntimeException("Server không phản hồi");
 		}
 	}
+<<<<<<< Updated upstream
 	
+=======
+//	public AccountCustomer findByAccount(String account, String password) {
+//		Optional<AccountCustomer> acc = accountCustomerRepository.login(account, password);
+//		if (acc.isPresent()) {
+//			System.out.println("Đã tìm thấy");
+//			return acc.get();
+//		} else {
+//			throw new RuntimeException("Server không phản hồi");
+//		}
+//	}
+
+>>>>>>> Stashed changes
 	public String deleteById(int id) {
 		accountCustomerRepository.deleteById(id);
 		return "Xoa thanh cong";
@@ -49,8 +62,8 @@ public class AccountCustomerServiceImpl {
 		String link = "http://localhost:9005/Customer/";
 		Date date = new Date();
 		Random random = new Random();
-		acc = new AccountCustomer(random.nextInt(10000),random.nextInt(10000),acc.getAccount(),acc.getPassword());
-		Customer customer = new Customer(acc.getIdCus(), acc.getIdAcc(),"","","","", date);
+		acc = new AccountCustomer(random.nextInt(10000), random.nextInt(10000), acc.getAccount(), acc.getPassword());
+		Customer customer = new Customer(acc.getIdCus(), acc.getIdAcc(), "", "", "", "", date);
 		HttpEntity<Customer> request = new HttpEntity<>(customer);
 		Customer foo = restTemplate.postForObject(link, request, Customer.class);
 		return accountCustomerRepository.save(acc);
@@ -64,5 +77,9 @@ public class AccountCustomerServiceImpl {
 		accCus.setAccount(account.getAccount());
 		accCus.setPassword(account.getPassword());
 		return accountCustomerRepository.save(accCus);
+	}
+
+	public List<AccountCustomer> login(String account, String password) {
+		return accountCustomerRepository.login(account, password);
 	}
 }
