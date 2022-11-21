@@ -34,6 +34,7 @@ public class OrderController {
 	}
 	
 	@Cacheable(key = "#id",value ="orders")
+	@Retry(name = "OrderService")
 	@GetMapping("/{id}")
 	public OrderO getById(@PathVariable int id) {
 		System.out.println("Call lan thu : "+ solan);
@@ -63,8 +64,12 @@ public class OrderController {
 	
 	
 	@CachePut(value = "orders",key = "#id")
+	@Retry(name = "OrderService")
 	@PutMapping("/{id}")
 	public OrderO update(@PathVariable int id, @RequestBody OrderO order) {
+		System.out.println("Call lan thu : "+ solan);
+		solan++;
+		System.out.println("Load tu DB");
 		return orderService.update(id, order);
 	}
 	
