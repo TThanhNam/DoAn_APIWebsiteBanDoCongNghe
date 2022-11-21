@@ -56,6 +56,12 @@ public class CartDetailRestController {
 		return "Xóa thành công " + id;
 	}
 	
+	@DeleteMapping("/")
+	public String deleteAllCartDetail() {
+		cartDetailService.deleteAll();
+		return "Xóa thành công ";
+	}
+	
 	@PutMapping("/")
 	public CartDetail update(@RequestBody CartDetail cartDetail) {
 		return cartDetailService.saveAndFlush(cartDetail);

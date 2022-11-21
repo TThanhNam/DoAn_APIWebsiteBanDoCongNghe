@@ -1,5 +1,6 @@
 package com.example.detailCartService.service;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,16 @@ import com.example.detailCartService.model.Product;
 import com.example.detailCartService.model.ProductOfCartDetail;
 import com.example.detailCartService.repository.CartDetailRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+
 @Service
 public class CartDetailService {
+	
+	private final String CARTDETAIL_RETRY = "CartDetail_Retry";
+	private final String CARTDETAIL_CB = "CartDetail_CB";
+	private final String CARTDETAIL_RateLM = "CartDetail_RateLM";
 	
 	@Autowired
 	private CartDetailRepository cartDetailRepository;
@@ -24,8 +33,13 @@ public class CartDetailService {
 	public List<CartDetail> findAll() {
 		return cartDetailRepository.findAll();
 	}
-
+	
+	
+//	@CircuitBreaker(name = CARTDETAIL_CB)
+//	@RateLimiter(name = CARTDETAIL_RateLM)
+	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> findAllCartDetalAndProduct() {
+		System.out.println("Đang kết nối tới sevice...");
 		List<ProductOfCartDetail> lsProductOfCartDetails = new ArrayList<>();
 		List<CartDetail> lsCartDetails = cartDetailRepository.findAll();
 		for (CartDetail cartDetail : lsCartDetails) {
@@ -34,24 +48,19 @@ public class CartDetailService {
 		}
 		return lsProductOfCartDetails;
 	}
-	
+//	@CircuitBreaker(name = CARTDETAIL_CB)
+//	@RateLimiter(name = CARTDETAIL_RateLM)
+	@Retry(name = CARTDETAIL_RETRY)
 	public ProductOfCartDetail findById(int id) {
-		 CartDetail cartDetail = cartDetailRepository.findById(id).get();
-		 Product product = restTemplate.getForObject("http://localhost:9004/Product/" + cartDetail.getProductID(), Product.class);
-		 return new ProductOfCartDetail(cartDetail, product);
+		System.out.println("Đang kết nối tới sevice...");
+		CartDetail cartDetail = cartDetailRepository.findById(id).get();
+		Product product = restTemplate.getForObject("http://localhost:9004/Product/" + cartDetail.getProductID(), Product.class);
+		return new ProductOfCartDetail(cartDetail, product);
 	}
 	
-	
-	public CartDetail saveAndFlush(CartDetail cartDetail) {
-		return cartDetailRepository.saveAndFlush(cartDetail);
-	}
-
-
-	public void deleteById(Integer id) {
-		cartDetailRepository.deleteById(id);
-	}
-	
+	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> getCartDetalAndProductByCartId(int id) {
+		System.out.println("Đang kết nối tới sevice...");
 		List<CartDetail> lsCartDetails = cartDetailRepository.getCartDetalAndProductByCartId(id);
 		List<ProductOfCartDetail> lsProductOfCartDetails = new ArrayList<>();
 		for (CartDetail i : lsCartDetails) {
@@ -59,5 +68,22 @@ public class CartDetailService {
 			 lsProductOfCartDetails.add(new ProductOfCartDetail(i, product));
 		}
 		return lsProductOfCartDetails;
+	}
+	
+	public List<ProductOfCartDetail> fallback(Exception e) {
+		System.out.println("Không thể kết nối tới service");
+		return new ArrayList<ProductOfCartDetail>();
+	}
+	
+	public CartDetail saveAndFlush(CartDetail cartDetail) {
+		return cartDetailRepository.saveAndFlush(cartDetail);
+	}
+
+	public void deleteById(Integer id) {
+		cartDetailRepository.deleteById(id);
+	}
+
+	public void deleteAll() {
+		cartDetailRepository.deleteAll();
 	}
 }

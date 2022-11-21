@@ -3,6 +3,9 @@ package com.example.cartService.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,12 +19,15 @@ import com.example.cartService.entity.Cart;
 import com.example.cartService.model.CartAndCartDetail;
 import com.example.cartService.service.CartService;
 
+import io.github.resilience4j.retry.annotation.Retry;
+
 @RestController
 @RequestMapping("/Cart")
 public class CartRestController {
+	
 	@Autowired
 	private CartService cartService;
-	
+
 	@GetMapping("/")
 	public List<Cart> getCarts(){
 		return cartService.getCarts();
@@ -37,7 +43,7 @@ public class CartRestController {
 	public Cart saveCart(@RequestBody Cart cart) {
 		return cartService.saveAndFlush(cart);
 	}
-	
+
 	@GetMapping("/{id}")
 	public Cart getCartById(@PathVariable int id) {
 		return cartService.getOneCart(id);
@@ -46,11 +52,6 @@ public class CartRestController {
 	@DeleteMapping("/{id}")
 	public String deleteCartById(@PathVariable int id) {
 		return cartService.deleteCart(id);
-	}
-	
-	@DeleteMapping("/")
-	public String deleteCartById() {
-		return cartService.deleteAll();
 	}
 	
 	@PutMapping("/")

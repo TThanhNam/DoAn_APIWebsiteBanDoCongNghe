@@ -1,5 +1,6 @@
 package com.example.cartService.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,8 +14,16 @@ import com.example.cartService.model.CartAndCartDetail;
 import com.example.cartService.model.ProductOfCartDetail;
 import com.example.cartService.repository.CartRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import io.github.resilience4j.retry.annotation.Retry;
+
 @Service
 public class CartService {
+	
+	private final String CART_RETRY = "Cart_Retry";
+	private final String CART_CB = "Cart_CB";
+	private final String CART_RATELM = "Cart_RateLM";
 	@Autowired
 	private CartRepository cartRepository;
 	
@@ -33,14 +42,27 @@ public class CartService {
 		return cartRepository.findAll();
 	}
 
+//	@CircuitBreaker(name = CART_CB)
+//	@RateLimiter(name = CART_RATELM)
+	@Retry(name = CART_RETRY, fallbackMethod = "fallback")
 	public CartAndCartDetail getCartAndCartDetailByCartId(int id) {
+		System.out.println("Đang kết nối tới sevice...");
 		Cart cart = getOneCart(id);
+		double totalMoney = 0;
 		ResponseEntity<ProductOfCartDetail[]> response = restTemplate
 				.getForEntity("http://localhost:9002/CartDetail/getByCartId/" + cart.getCartID(),
 						ProductOfCartDetail[].class);
 		List<ProductOfCartDetail> ls = Arrays.asList(response.getBody());
+		for (ProductOfCartDetail productOfCartDetail : ls) {
+			totalMoney += productOfCartDetail.getProduct().getPricePD() * productOfCartDetail.getCartDetail().getQuantity();
+		}
+		cart.setTotalMoney(totalMoney);
 		return new CartAndCartDetail(cart, ls);
-		
+	}
+	
+	public CartAndCartDetail fallback(Exception e) {
+		System.out.println("Không thể kết nối tới service");
+		return new CartAndCartDetail();
 	}
 	
 	public String deleteCart(int cartID) {
