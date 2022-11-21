@@ -1,4 +1,4 @@
-package com.example.Order.Model;
+package com.example.Order.Entity;
 
 import java.io.Serializable;
 

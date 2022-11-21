@@ -1,5 +1,7 @@
 package com.example.Order.Model;
 
+import com.example.Order.Entity.OrderOOD;
+
 public class CustomerOfOrder {
 	private OrderOOD orderOOD;
 	private Customer customer;

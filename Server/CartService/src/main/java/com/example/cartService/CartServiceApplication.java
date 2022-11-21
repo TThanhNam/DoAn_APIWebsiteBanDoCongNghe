@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
+import io.github.resilience4j.retry.annotation.Retry;
+
 @SpringBootApplication
 public class CartServiceApplication {
 

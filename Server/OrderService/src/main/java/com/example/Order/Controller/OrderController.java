@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Order.Entity.OrderOOD;
 import com.example.Order.Model.CustomerOfOrder;
-import com.example.Order.Model.OrderOOD;
 import com.example.Order.Service.OrderService;
 
 @RestController

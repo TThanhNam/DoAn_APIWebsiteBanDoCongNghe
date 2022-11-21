@@ -1,4 +1,4 @@
-package com.example.detailCartService.entity;
+package com.example.detailCartService.model;
 
 public class Product {
 	private int idPD;

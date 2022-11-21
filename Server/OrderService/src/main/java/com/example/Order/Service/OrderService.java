@@ -7,9 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.example.Order.Entity.OrderOOD;
 import com.example.Order.Model.Customer;
 import com.example.Order.Model.CustomerOfOrder;
-import com.example.Order.Model.OrderOOD;
 import com.example.Order.Repository.OrderRepository;
 
 @Service

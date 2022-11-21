@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.detailCartService.entity.CartDetail;
-import com.example.detailCartService.entity.ProductOfCartDetail;
+import com.example.detailCartService.model.ProductOfCartDetail;
 import com.example.detailCartService.service.CartDetailService;
 
 @RestController

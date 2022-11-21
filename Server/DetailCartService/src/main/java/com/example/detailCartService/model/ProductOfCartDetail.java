@@ -1,4 +1,6 @@
-package com.example.detailCartService.entity;
+package com.example.detailCartService.model;
+
+import com.example.detailCartService.entity.CartDetail;
 
 public class ProductOfCartDetail {
 	
