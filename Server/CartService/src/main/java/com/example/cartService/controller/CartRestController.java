@@ -34,7 +34,6 @@ public class CartRestController {
 	public List<Cart> getCarts(){
 		return cartService.getCarts();
 	}
-	
 	@GetMapping("/getCartAndCartDetail/{id}")
 	private CartAndCartDetail getCartAndCartDetail(@PathVariable int id) {
 		// TODO Auto-generated method stub
@@ -45,20 +44,25 @@ public class CartRestController {
 	public Cart saveCart(@RequestBody Cart cart) {
 		return cartService.saveCart(cart);
 	}
-
+	
+	@Retry(name = "CARTSERVICE")
+	@Cacheable(key = "#id", value="carts")
 	@GetMapping("/{id}")
 	public Cart getCartById(@PathVariable int id) {
 		System.out.println("Call lan thu: "+solan);
 		solan++;
+		System.out.println("Load tu DB");
 		return cartService.getOneCart(id);
 	}
 	
 	@DeleteMapping("/{id}")
+	@CacheEvict(value = "carts",allEntries = false,key = "#id")
 	public String deleteCartById(@PathVariable int id) {
 		return cartService.deleteCart(id);
 	}
 	
 	@PutMapping("/{id}")
+	@CachePut(value = "carts",key = "#id")
 	public Cart updateCart(@PathVariable int id,@RequestBody Cart cart) {
 		return cartService.update(id, cart);
 	}

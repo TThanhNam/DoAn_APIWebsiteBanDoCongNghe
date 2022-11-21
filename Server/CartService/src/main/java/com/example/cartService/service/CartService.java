@@ -13,8 +13,6 @@ import com.example.cartService.entity.CartAndCartDetail;
 import com.example.cartService.entity.ProductOfCartDetail;
 import com.example.cartService.repository.CartRepository;
 
-import io.github.resilience4j.retry.annotation.Retry;
-
 @Service
 public class CartService {
 	@Autowired
@@ -34,8 +32,7 @@ public class CartService {
 	public List<Cart> getCarts() {
 		return cartRepository.findAll();
 	}
-	
-	@Retry(name = "CARTSERVICE")
+
 	public CartAndCartDetail getCartAndCartDetailByCartId(int id) {
 		Cart cart = getOneCart(id);
 		ResponseEntity<ProductOfCartDetail[]> response = restTemplate
@@ -43,6 +40,7 @@ public class CartService {
 						ProductOfCartDetail[].class);
 		List<ProductOfCartDetail> ls = Arrays.asList(response.getBody());
 		return new CartAndCartDetail(cart, ls);
+		
 	}
 	
 	public String deleteCart(int cartID) {

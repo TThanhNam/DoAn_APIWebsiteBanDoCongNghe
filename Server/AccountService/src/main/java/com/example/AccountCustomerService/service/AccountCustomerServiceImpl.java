@@ -34,7 +34,20 @@ public class AccountCustomerServiceImpl {
 			throw new RuntimeException("Server không phản hồi");
 		}
 	}
+<<<<<<< Updated upstream
 	
+=======
+//	public AccountCustomer findByAccount(String account, String password) {
+//		Optional<AccountCustomer> acc = accountCustomerRepository.login(account, password);
+//		if (acc.isPresent()) {
+//			System.out.println("Đã tìm thấy");
+//			return acc.get();
+//		} else {
+//			throw new RuntimeException("Server không phản hồi");
+//		}
+//	}
+
+>>>>>>> Stashed changes
 	public String deleteById(int id) {
 		accountCustomerRepository.deleteById(id);
 		return "Xoa thanh cong";

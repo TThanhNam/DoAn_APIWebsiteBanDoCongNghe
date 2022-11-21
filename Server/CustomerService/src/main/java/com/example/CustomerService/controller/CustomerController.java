@@ -1,6 +1,5 @@
 package com.example.CustomerService.controller;
 
-import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestClientException;
 
 import com.example.CustomerService.doubleEntity.AccountOfCustomer;
 import com.example.CustomerService.entity.Customer;
@@ -34,7 +32,7 @@ public class CustomerController {
 		return customerServiceImpl.deleteById(id);
 	}
 	@PostMapping("/save")
-	public Customer saveCustomer(@RequestBody Customer customer) throws RestClientException, URISyntaxException {
+	public Customer saveCustomer(@RequestBody Customer customer) {
 		return customerServiceImpl.saveCustomer(customer);
 	}
 	@PutMapping("/{id}")
