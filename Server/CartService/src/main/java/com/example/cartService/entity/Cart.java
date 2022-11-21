@@ -10,9 +10,34 @@ import javax.persistence.Id;
 @Entity
 public class Cart implements Serializable {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int cartID;
-	private double totalMoney;
+	private int idCus;
+	private double totalMoney = 0;
+	
+	public Cart(int cartID, int idCus, double totalMoney) {
+		super();
+		this.cartID = cartID;
+		this.idCus = idCus;
+		this.totalMoney = totalMoney;
+	}
+
+	public Cart(int idCus, double totalMoney) {
+		super();
+		this.idCus = idCus;
+		this.totalMoney = totalMoney;
+	}
+
+	public Cart() {
+		super();
+	}
+
+	public int getIdCus() {
+		return idCus;
+	}
+
+	public void setIdCus(int idCus) {
+		this.idCus = idCus;
+	}
 
 	public int getCartID() {
 		return cartID;
@@ -29,17 +54,7 @@ public class Cart implements Serializable {
 	public void setTotalMoney(double totalMoney) {
 		this.totalMoney = totalMoney;
 	}
-
-	public Cart(int cartID, double totalMoney) {
-		super();
-		this.cartID = cartID;
-		this.totalMoney = totalMoney;
-	}
-
-	public Cart() {
-		super();
-	}
-
+	
 	@Override
 	public String toString() {
 		return "Cart [cartID=" + cartID + ", totalMoney=" + totalMoney + "]";

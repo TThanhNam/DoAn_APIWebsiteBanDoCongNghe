@@ -3,9 +3,6 @@ package com.example.Order.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,58 +12,45 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Order.Model.Order_Cart_Customer;
-import com.example.Order.Entity.OrderO;
+import com.example.Order.Entity.OrderOOD;
+import com.example.Order.Model.CustomerOfOrder;
 import com.example.Order.Service.OrderService;
 
-import io.github.resilience4j.retry.annotation.Retry;
-
 @RestController
-@RequestMapping("/Order")
+@RequestMapping("/OrderOOD")
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
-	private int solan = 1;
 	
 	@GetMapping("/")
-	public List<OrderO> getAllOrder() {
+	private List<OrderOOD> getAllOrder() {
+		// TODO Auto-generated method stub
 		return orderService.findAll();
 	}
 	
-	@Cacheable(key = "#id",value ="orders")
 	@GetMapping("/{id}")
-	public OrderO getById(@PathVariable int id) {
-		System.out.println("Call lan thu : "+ solan);
-		solan++;
-		System.out.println("Load tu DB");
+	public OrderOOD getById(@PathVariable int id) {
 		return orderService.findById(id);
 	}
 	
 	@PostMapping("/")
-	private OrderO createOrder(@RequestBody OrderO order) {
+	private OrderOOD createOrder(@RequestBody OrderOOD orderOOD) {
 		// TODO Auto-generated method stub
-		return orderService.saveAndFlush(order);
+		return orderService.saveAndFlush(orderOOD);
 	}
 	
-	@CacheEvict(value = "orders",allEntries = false,key = "#id")
 	@DeleteMapping("/{id}")
 	private String deleteOrder(@PathVariable int id) {
 		orderService.deleteById(id);
 		return "Delete id" + id;
 	}
 	
-	@Cacheable(key = "#id",value ="orders")
-	@GetMapping("/call/{id}")
-	public Order_Cart_Customer getOCC(@PathVariable int id) {
-		return orderService.findByIdOCC(id);
+	@GetMapping("/call/id")
+	public CustomerOfOrder getCustomerOfOrder(@PathVariable int id) {
+		return orderService.findByIdCustomerOrder(id);
 	}
-	
-	
-	@CachePut(value = "orders",key = "#id")
 	@PutMapping("/{id}")
-	public OrderO update(@PathVariable int id, @RequestBody OrderO order) {
-		return orderService.update(id, order);
+	public OrderOOD update(@PathVariable int id, @RequestBody OrderOOD orderOOD) {
+		return orderService.update(id, orderOOD);
 	}
-	
-	
 }

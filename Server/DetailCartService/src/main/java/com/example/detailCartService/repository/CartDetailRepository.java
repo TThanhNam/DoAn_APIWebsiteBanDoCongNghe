@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.example.detailCartService.entity.CartDetail;
-import com.example.detailCartService.entity.ProductOfCartDetail;
+import com.example.detailCartService.model.ProductOfCartDetail;
 @Repository
 public interface CartDetailRepository extends JpaRepository<CartDetail, Integer>{
 

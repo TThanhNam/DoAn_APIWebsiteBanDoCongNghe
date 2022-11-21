@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.example.Order.Model.Cart;
+import com.example.Order.Entity.OrderOOD;
 import com.example.Order.Model.Customer;
-import com.example.Order.Model.Order_Cart_Customer;
-import com.example.Order.Entity.OrderO;
+import com.example.Order.Model.CustomerOfOrder;
 import com.example.Order.Repository.OrderRepository;
 
 @Service
@@ -22,44 +21,41 @@ public class OrderService {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	public List<OrderO> findAll() {
+	public List<OrderOOD> findAll() {
 		return orderRepository.findAll();
 	}
 	
 	
 
-	public OrderO findById(Integer id) {
+	public OrderOOD findById(Integer id) {
 		return orderRepository.findById(id).get();
 	}
-	
+
+	public OrderOOD saveAndFlush(OrderOOD orderOOD) {
+		return orderRepository.saveAndFlush(orderOOD);
+	}
+
 	public void deleteById(Integer id) {
 		orderRepository.deleteById(id);
 	}
 	
-	public OrderO saveAndFlush(OrderO order) {
-		return orderRepository.saveAndFlush(order);
-	}
-
-
-	
-	public Order_Cart_Customer findByIdOCC(int id) {
-		OrderO order = orderRepository.findById(id).get();
+	public CustomerOfOrder findByIdCustomerOrder(int id) {
+		OrderOOD order = orderRepository.findById(id).get();
 		Customer customer = restTemplate.getForObject("http://localhost:9005/Customer/"+order.getIdCus(),Customer.class);
-		Cart cart = restTemplate.getForObject("http://localhost:9001/Cart/"+order.getCartID(),Cart.class);
-		Order_Cart_Customer co = new Order_Cart_Customer(order, customer, cart);
+		CustomerOfOrder co = new CustomerOfOrder(order,customer);
 		return co;
 	}
-	public OrderO update(int id, OrderO order ) {
-		OrderO order1 = orderRepository.findById(id).orElse(null);
-		if (order1 == null) {
+	
+	public OrderOOD update(int id,OrderOOD orderOOD) {
+		OrderOOD order1 = orderRepository.findById(id).orElse(null);
+		if(order1 == null) {
 			return null;
 		}
-		order1.setCartID(order.getCartID());
-		order1.setIdCus(order.getIdCus());
-		order1.setAddress(order.getAddress());
-		order1.setDeliveryWay(order.getDeliveryWay());
-		order1.setWayToPay(order.getWayToPay());
+		order1.setAddress(orderOOD.getAddress());
+		order1.setDeliveryWay(orderOOD.getDeliveryWay());
+		order1.setIdCus(orderOOD.getIdCus());
+		order1.setTotalMoney(orderOOD.getTotalMoney());
+		order1.setWayToPay(orderOOD.getWayToPay());
 		return orderRepository.save(order1);
 	}
-
 }

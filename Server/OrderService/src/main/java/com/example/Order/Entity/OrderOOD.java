@@ -6,20 +6,30 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "orders")
-public class OrderO implements Serializable{
+public class OrderOOD implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int OrderId;
 	private int idCus;
-	private int cartID;
 	private String address;
 	private String wayToPay;
 	private String deliveryWay;
+	private double totalMoney;
+	public OrderOOD() {
+		super();
+	}
+	public OrderOOD(int orderId, int idCus, String address, String wayToPay, String deliveryWay, double totalMoney) {
+		super();
+		OrderId = orderId;
+		this.idCus = idCus;
+		this.address = address;
+		this.wayToPay = wayToPay;
+		this.deliveryWay = deliveryWay;
+		this.totalMoney = totalMoney;
+	}
 	public int getOrderId() {
 		return OrderId;
 	}
@@ -31,12 +41,6 @@ public class OrderO implements Serializable{
 	}
 	public void setIdCus(int idCus) {
 		this.idCus = idCus;
-	}
-	public int getCartID() {
-		return cartID;
-	}
-	public void setCartID(int cartID) {
-		this.cartID = cartID;
 	}
 	public String getAddress() {
 		return address;
@@ -56,25 +60,17 @@ public class OrderO implements Serializable{
 	public void setDeliveryWay(String deliveryWay) {
 		this.deliveryWay = deliveryWay;
 	}
-	public OrderO(int orderId, int idCus, int cartID, String address, String wayToPay, String deliveryWay) {
-		super();
-		OrderId = orderId;
-		this.idCus = idCus;
-		this.cartID = cartID;
-		this.address = address;
-		this.wayToPay = wayToPay;
-		this.deliveryWay = deliveryWay;
+	public double getTotalMoney() {
+		return totalMoney;
 	}
-	public OrderO() {
-		super();
+	public void setTotalMoney(double totalMoney) {
+		this.totalMoney = totalMoney;
 	}
 	@Override
 	public String toString() {
-		return "OrderO [OrderId=" + OrderId + ", idCus=" + idCus + ", cartID=" + cartID + ", address=" + address
-				+ ", wayToPay=" + wayToPay + ", deliveryWay=" + deliveryWay + "]";
+		return "OrderOOD [OrderId=" + OrderId + ", idCus=" + idCus + ", address=" + address + ", wayToPay=" + wayToPay
+				+ ", deliveryWay=" + deliveryWay + ", totalMoney=" + totalMoney + "]";
 	}
-	
-	
 	
 	
 }
