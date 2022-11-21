@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.detailCartService.entity.CartDetail;
-import com.example.detailCartService.entity.ProductOfCartDetail;
+import com.example.detailCartService.model.ProductOfCartDetail;
 import com.example.detailCartService.service.CartDetailService;
 
 import io.github.resilience4j.retry.annotation.Retry;
@@ -35,14 +35,8 @@ public class CartDetailRestController {
 		return cartDetailService.findAll();
 	}
 	
-	
 	@GetMapping("/{id}")
-	@Retry(name = "DETAILCARTSERVICE")
-	@Cacheable(key = "#id",value ="cartDetails")
 	public ProductOfCartDetail getCartDetailID(@PathVariable int id) {
-		System.out.println("Call lan thu: " +solan);
-		solan++;
-		System.out.println("Load tu DB");
 		return cartDetailService.findById(id);
 	}
 	
@@ -64,16 +58,14 @@ public class CartDetailRestController {
 	}
 	
 	@DeleteMapping("/{id}")
-	@CacheEvict(value = "cartDetails",allEntries = false,key = "#id")
 	public String deleteCartDetail(@PathVariable int id) {
 		cartDetailService.deleteById(id);
 		return "Xóa thành công " + id;
 	}
 	
 	@PutMapping("/{id}")
-	@CachePut(value = "cartDetails",key = "#id")
-	public CartDetail update(@PathVariable int id,@RequestBody CartDetail cartDetail) {
-		return cartDetailService.update(id, cartDetail);
+	public CartDetail update(@RequestBody CartDetail cartDetail) {
+		return cartDetailService.saveAndFlush(cartDetail);
 	}
 	
 }
