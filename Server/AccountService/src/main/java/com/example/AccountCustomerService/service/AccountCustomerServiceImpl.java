@@ -65,4 +65,7 @@ public class AccountCustomerServiceImpl {
 		accCus.setPassword(account.getPassword());
 		return accountCustomerRepository.save(accCus);
 	}
+	public List<AccountCustomer> login(String account, String password) {
+		return accountCustomerRepository.login(account, password);
+	}
 }

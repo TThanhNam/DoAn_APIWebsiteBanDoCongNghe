@@ -52,13 +52,16 @@ public class CustomerController {
 		return customerServiceImpl.updateCustomer(id, customer);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/call/{id}")
 	@CircuitBreaker(name = "listcustomer")
 	@RateLimiter(name = "getAccountOfCustomer", fallbackMethod = "rateLimitterFallBack")
 	public AccountOfCustomer getAccountOfCustomer(@PathVariable int id) {
 		return customerServiceImpl.getAccountOfCustomer(id);
 	}
-
+	@GetMapping("/{id}")
+	public Customer getOneCustomer (int id) {
+		return customerServiceImpl.findById(id);
+	}
 	public AccountOfCustomer rateLimitterFallBack(Exception e) {
 		for (int i = 0; i < 5; i++) {
 			System.out.println("Quá nhiều request");
