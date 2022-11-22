@@ -58,4 +58,9 @@ public class CartRestController {
 	public Cart updateCart(@RequestBody Cart cart) {
 		return cartService.saveAndFlush(cart);
 	}
+	
+	@PutMapping("/updateTotalMoney/{id}/{tt}")
+	public Cart updateTotalMoney(@PathVariable int id, @PathVariable double tt) {
+		return cartService.UpdateTotalMoney(id,tt);
+	}
 }

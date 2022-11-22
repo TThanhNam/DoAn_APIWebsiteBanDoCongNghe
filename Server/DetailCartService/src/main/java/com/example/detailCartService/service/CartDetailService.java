@@ -22,7 +22,7 @@ public class CartDetailService {
 	
 	private final String CARTDETAIL_RETRY = "CartDetail_Retry";
 	private final String CARTDETAIL_CB = "CartDetail_CB";
-	private final String CARTDETAIL_RateLM = "CartDetail_RateLM";
+	private final String CARTDETAIL_RATELM = "CartDetail_RateLM";
 	
 	@Autowired
 	private CartDetailRepository cartDetailRepository;
@@ -36,7 +36,7 @@ public class CartDetailService {
 	
 	
 //	@CircuitBreaker(name = CARTDETAIL_CB)
-//	@RateLimiter(name = CARTDETAIL_RateLM)
+//	@RateLimiter(name = CARTDETAIL_RATELM)
 	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> findAllCartDetalAndProduct() {
 		System.out.println("Đang kết nối tới sevice...");
@@ -49,7 +49,7 @@ public class CartDetailService {
 		return lsProductOfCartDetails;
 	}
 //	@CircuitBreaker(name = CARTDETAIL_CB)
-//	@RateLimiter(name = CARTDETAIL_RateLM)
+//	@RateLimiter(name = CARTDETAIL_RATELM)
 	@Retry(name = CARTDETAIL_RETRY)
 	public ProductOfCartDetail findById(int id) {
 		System.out.println("Đang kết nối tới sevice...");
@@ -57,7 +57,8 @@ public class CartDetailService {
 		Product product = restTemplate.getForObject("http://localhost:9004/Product/" + cartDetail.getProductID(), Product.class);
 		return new ProductOfCartDetail(cartDetail, product);
 	}
-	
+//	@CircuitBreaker(name = CARTDETAIL_CB)
+//	@RateLimiter(name = CARTDETAIL_RATELM)
 	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> getCartDetalAndProductByCartId(int id) {
 		System.out.println("Đang kết nối tới sevice...");
@@ -76,6 +77,14 @@ public class CartDetailService {
 	}
 	
 	public CartDetail saveAndFlush(CartDetail cartDetail) {
+		double totalMoney = 0;
+		List<CartDetail> lsCartDetails = cartDetailRepository.getCartDetalAndProductByCartId(cartDetail.getCartID());
+		lsCartDetails.add(cartDetail);
+		for (CartDetail i : lsCartDetails) {
+			 Product product = restTemplate.getForObject("http://localhost:9004/Product/" + i.getProductID(), Product.class);
+			 totalMoney += product.getPricePD() * i.getQuantity();
+		}
+		restTemplate.put("http://localhost:9001/Cart/updateTotalMoney/" + cartDetail.getCartID() + "/" + totalMoney,String.class);
 		return cartDetailRepository.saveAndFlush(cartDetail);
 	}
 

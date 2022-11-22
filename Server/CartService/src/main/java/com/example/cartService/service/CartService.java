@@ -65,6 +65,12 @@ public class CartService {
 		return new CartAndCartDetail();
 	}
 	
+	public Cart UpdateTotalMoney(int id,double totalMoney) {
+		Cart cart = getOneCart(id);
+		cart.setTotalMoney(totalMoney);
+		return saveAndFlush(cart);		
+	}
+	
 	public String deleteCart(int cartID) {
 		cartRepository.deleteById(cartID);
 		return "Xoa thanh cong"; 
