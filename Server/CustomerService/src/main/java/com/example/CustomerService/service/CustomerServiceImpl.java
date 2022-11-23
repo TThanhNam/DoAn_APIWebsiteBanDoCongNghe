@@ -46,7 +46,7 @@ public class CustomerServiceImpl {
 		return "Xóa hết thành công";
 	}
 
-	public Customer saveCustomer(Customer customer) throws RestClientException, URISyntaxException {
+	public Customer saveCustomer(Customer customer){
 		Random random = new Random();
 		CartVO cartVO = new CartVO(random.nextInt(10000),customer.getIdCus(),0);
 		customer.setCartId(cartVO.getCartID());

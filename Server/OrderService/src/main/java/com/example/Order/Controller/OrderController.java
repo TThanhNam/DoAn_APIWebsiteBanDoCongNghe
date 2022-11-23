@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Order.Model.OrderCart;
+import com.example.Order.Model.OrderCustomer;
 import com.example.Order.Model.Order_Cart_Customer;
 import com.example.Order.Entity.OrderO;
 import com.example.Order.Service.OrderService;
@@ -26,7 +28,6 @@ import io.github.resilience4j.retry.annotation.Retry;
 public class OrderController {
 	@Autowired
 	private OrderService orderService;
-	private int solan = 1;
 	
 	@GetMapping("/")
 	public List<OrderO> getAllOrder() {
@@ -40,14 +41,15 @@ public class OrderController {
 	}
 	
 	@PostMapping("/")
-	private OrderO createOrder(@RequestBody OrderO order) {
+	public OrderO createOrder(@RequestBody OrderO order) {
+		System.out.println(order);
 		// TODO Auto-generated method stub
 		return orderService.saveAndFlush(order);
 	}
 	
 	@CacheEvict(value = "orders",allEntries = false,key = "#id")
 	@DeleteMapping("/{id}")
-	private String deleteOrder(@PathVariable int id) {
+	public String deleteOrder(@PathVariable int id) {
 		orderService.deleteById(id);
 		return "Delete id" + id;
 	}
@@ -58,14 +60,21 @@ public class OrderController {
 		return orderService.findByIdOCC(id);
 	}
 	
+	@Cacheable(key = "#id",value ="orders")
+	@GetMapping("/call1/{id}")
+	public OrderCart getOC(@PathVariable int id) {
+		return orderService.findbyOC(id);
+	}
+	
+	@Cacheable(key = "#id",value ="orders")
+	@GetMapping("/call2/{id}")
+	public OrderCustomer getOCU(@PathVariable int id) {
+		return orderService.findbyOCu(id);
+	}
 	
 	@CachePut(value = "orders",key = "#id")
-	@Retry(name = "OrderService")
 	@PutMapping("/{id}")
 	public OrderO update(@PathVariable int id, @RequestBody OrderO order) {
-		System.out.println("Call lan thu : "+ solan);
-		solan++;
-		System.out.println("Load tu DB");
 		return orderService.update(id, order);
 	}
 	

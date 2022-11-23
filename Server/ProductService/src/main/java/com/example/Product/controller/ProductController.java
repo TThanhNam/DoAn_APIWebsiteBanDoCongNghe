@@ -49,16 +49,13 @@ public class ProductController {
 	@DeleteMapping("/{idPD}")
 	@CacheEvict(value = "Product",allEntries = false,key = "#idPD")
 	public String deleteProduct(@PathVariable int idPD) {
-		
 		return productServiceImpl.deleteProduct(idPD);
-
 	}
 
 	@PutMapping("/{idPD}")
 	@CachePut(value = "Product",key = "#idPD")
 	public Product updateProduct(@PathVariable int idPD,@RequestBody Product product) {
-		return productServiceImpl.updateProduct(idPD, product);
-		
+		return productServiceImpl.updateProduct(idPD, product);		
 	}
 	
 	//typePD

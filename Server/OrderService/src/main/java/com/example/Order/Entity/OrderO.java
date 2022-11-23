@@ -14,17 +14,17 @@ public class OrderO implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int OrderId;
+	private int orderID;
 	private int idCus;
 	private int cartID;
 	private String address;
 	private String wayToPay;
 	private String deliveryWay;
-	public int getOrderId() {
-		return OrderId;
+	public int getOrderID() {
+		return orderID;
 	}
-	public void setOrderId(int orderId) {
-		OrderId = orderId;
+	public void setOrderID(int orderID) {
+		this.orderID = orderID;
 	}
 	public int getIdCus() {
 		return idCus;
@@ -56,9 +56,9 @@ public class OrderO implements Serializable{
 	public void setDeliveryWay(String deliveryWay) {
 		this.deliveryWay = deliveryWay;
 	}
-	public OrderO(int orderId, int idCus, int cartID, String address, String wayToPay, String deliveryWay) {
+	public OrderO(int orderID, int idCus, int cartID, String address, String wayToPay, String deliveryWay) {
 		super();
-		OrderId = orderId;
+		this.orderID = orderID;
 		this.idCus = idCus;
 		this.cartID = cartID;
 		this.address = address;
@@ -70,10 +70,9 @@ public class OrderO implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "OrderO [OrderId=" + OrderId + ", idCus=" + idCus + ", cartID=" + cartID + ", address=" + address
+		return "OrderO [orderID=" + orderID + ", idCus=" + idCus + ", cartID=" + cartID + ", address=" + address
 				+ ", wayToPay=" + wayToPay + ", deliveryWay=" + deliveryWay + "]";
 	}
-	
 	
 	
 	

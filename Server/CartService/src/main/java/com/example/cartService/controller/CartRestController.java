@@ -19,16 +19,23 @@ import com.example.cartService.entity.Cart;
 import com.example.cartService.model.CartAndCartDetail;
 import com.example.cartService.service.CartService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
 @RequestMapping("/Cart")
 public class CartRestController {
+	private final String CART_RETRY = "Cart_Retry";
+	private final String CART_CB = "Cart_CB";
+	private final String CART_RATELM = "Cart_RateLM";
 	
 	@Autowired
 	private CartService cartService;
 
 	@GetMapping("/")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public List<Cart> getCarts(){
 		return cartService.getCarts();
 	}
