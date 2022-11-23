@@ -54,12 +54,12 @@ public class CustomerController {
 
 	@GetMapping("/call/{id}")
 	@CircuitBreaker(name = "listcustomer")
-	@RateLimiter(name = "getAccountOfCustomer", fallbackMethod = "rateLimitterFallBack")
+	//@RateLimiter(name = "getAccountOfCustomer", fallbackMethod = "rateLimitterFallBack")
 	public AccountOfCustomer getAccountOfCustomer(@PathVariable int id) {
 		return customerServiceImpl.getAccountOfCustomer(id);
 	}
 	@GetMapping("/{id}")
-	public Customer getOneCustomer (int id) {
+	public Customer getOneCustomer (@PathVariable int id) {
 		return customerServiceImpl.findById(id);
 	}
 	public AccountOfCustomer rateLimitterFallBack(Exception e) {
