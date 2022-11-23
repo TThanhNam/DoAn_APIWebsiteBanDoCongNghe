@@ -1,0 +1,7 @@
+resilience4j:       
+  retry:
+    instances:
+      OrderService:
+        max-retry-attempts: 5 #số lần gọi lại
+        waitDuration: 10s #gọi lại trong 10s chương trình kia bị lỗi
+

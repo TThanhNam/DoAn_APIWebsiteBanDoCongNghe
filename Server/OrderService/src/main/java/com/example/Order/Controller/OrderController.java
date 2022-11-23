@@ -21,6 +21,8 @@ import com.example.Order.Model.Order_Cart_Customer;
 import com.example.Order.Entity.OrderO;
 import com.example.Order.Service.OrderService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import io.github.resilience4j.retry.annotation.Retry;
 
 @RestController
@@ -29,14 +31,20 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+	private int solan = 1;
 	@GetMapping("/")
 	public List<OrderO> getAllOrder() {
 		return orderService.findAll();
 	}
 	
 	@Cacheable(key = "#id",value ="orders")
-	@GetMapping("/{id}")
+	@GetMapping("/{id}")	
+//	@RateLimiter(name = "getOCU", fallbackMethod = "rateLimitterFallBack")
+//	@CircuitBreaker(name = "OrderCart")
+	@Retry(name = "OrderService")
 	public OrderO getById(@PathVariable int id) {		
+		System.out.println("So lan call thu " +solan);
+		solan++;
 		return orderService.findById(id);
 	}
 	
@@ -55,8 +63,11 @@ public class OrderController {
 	}
 	
 	@Cacheable(key = "#id",value ="orders")
+	@Retry(name = "OrderService")
 	@GetMapping("/call/{id}")
 	public Order_Cart_Customer getOCC(@PathVariable int id) {
+		System.out.println("So lan call thu " +solan);
+		solan++;
 		return orderService.findByIdOCC(id);
 	}
 	
@@ -68,6 +79,7 @@ public class OrderController {
 	
 	@Cacheable(key = "#id",value ="orders")
 	@GetMapping("/call2/{id}")
+	@RateLimiter(name = "getOCU", fallbackMethod = "rateLimitterFallBack")
 	public OrderCustomer getOCU(@PathVariable int id) {
 		return orderService.findbyOCu(id);
 	}
@@ -78,5 +90,11 @@ public class OrderController {
 		return orderService.update(id, order);
 	}
 	
+	public OrderCustomer rateLimitterFallBack(Exception e) {
+		for (int i = 0; i < 5; i++) {
+			System.out.println("Quá nhiều request");
+		}
+		return null;
+	}
 	
 }
