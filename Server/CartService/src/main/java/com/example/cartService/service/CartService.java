@@ -42,9 +42,7 @@ public class CartService {
 		return cartRepository.findAll();
 	}
 
-//	@CircuitBreaker(name = CART_CB)
-//	@RateLimiter(name = CART_RATELM)
-	@Retry(name = CART_RETRY, fallbackMethod = "fallback")
+	@Retry(name = CART_RETRY)
 	public CartAndCartDetail getCartAndCartDetailByCartId(int id) {
 		System.out.println("Đang kết nối tới sevice...");
 		Cart cart = getOneCart(id);

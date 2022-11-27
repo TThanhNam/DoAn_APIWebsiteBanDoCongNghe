@@ -34,9 +34,6 @@ public class CartDetailService {
 		return cartDetailRepository.findAll();
 	}
 	
-	
-//	@CircuitBreaker(name = CARTDETAIL_CB)
-//	@RateLimiter(name = CARTDETAIL_RATELM)
 	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> findAllCartDetalAndProduct() {
 		System.out.println("Đang kết nối tới sevice...");
@@ -48,8 +45,7 @@ public class CartDetailService {
 		}
 		return lsProductOfCartDetails;
 	}
-//	@CircuitBreaker(name = CARTDETAIL_CB)
-//	@RateLimiter(name = CARTDETAIL_RATELM)
+	
 	@Retry(name = CARTDETAIL_RETRY)
 	public ProductOfCartDetail findById(int id) {
 		System.out.println("Đang kết nối tới sevice...");
@@ -57,8 +53,7 @@ public class CartDetailService {
 		Product product = restTemplate.getForObject("http://localhost:9004/Product/" + cartDetail.getProductID(), Product.class);
 		return new ProductOfCartDetail(cartDetail, product);
 	}
-//	@CircuitBreaker(name = CARTDETAIL_CB)
-//	@RateLimiter(name = CARTDETAIL_RATELM)
+
 	@Retry(name = CARTDETAIL_RETRY, fallbackMethod = "fallback")
 	public List<ProductOfCartDetail> getCartDetalAndProductByCartId(int id) {
 		System.out.println("Đang kết nối tới sevice...");

@@ -41,32 +41,44 @@ public class CartRestController {
 	}
 	
 	@GetMapping("/getCartAndCartDetail/{id}")
-	private CartAndCartDetail getCartAndCartDetail(@PathVariable int id) {
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
+	public CartAndCartDetail getCartAndCartDetail(@PathVariable int id) {
 		// TODO Auto-generated method stub
 		return cartService.getCartAndCartDetailByCartId(id);
 	}
 	
 	@PostMapping("/")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public Cart saveCart(@RequestBody Cart cart) {
 		return cartService.saveAndFlush(cart);
 	}
 
 	@GetMapping("/{id}")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public Cart getCartById(@PathVariable int id) {
 		return cartService.getOneCart(id);
 	}
 	
 	@DeleteMapping("/{id}")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public String deleteCartById(@PathVariable int id) {
 		return cartService.deleteCart(id);
 	}
 	
 	@PutMapping("/")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public Cart updateCart(@RequestBody Cart cart) {
 		return cartService.saveAndFlush(cart);
 	}
 	
 	@PutMapping("/updateTotalMoney/{id}/{tt}")
+	@CircuitBreaker(name = CART_CB)
+	@RateLimiter(name = CART_RATELM)
 	public Cart updateTotalMoney(@PathVariable int id, @PathVariable double tt) {
 		return cartService.UpdateTotalMoney(id,tt);
 	}
